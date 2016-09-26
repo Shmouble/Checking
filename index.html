@@ -2,7 +2,7 @@
   <head>
     <title>Bannerocity - Personalized Online Sky Banners</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link type="text/css" href="style.css" rel="stylesheet">
 
     <script type="text/javascript" src="index.js"></script>
   </head>
@@ -16,13 +16,13 @@
       <div class="field">
         Enter the banner message:
         <input id="message" name="message" type="text" size="32"
-          onblur="validateNonEmpty(this, document.getElementById('message_help'))" />
+          onblur="validateLength(1, 32, this, document.getElementById('message_help'))" />
         <span id="message_help" class="help"></span>
       </div>
       <div class="field">
         Enter ZIP code of the location:
         <input id="zipcode" name="zipcode" type="text" size="5"
-          onblur="validateNonEmpty(this, document.getElementById('zipcode_help'))" />
+          onblur="validateZIPCode(this, document.getElementById('zipcode_help'))" />
         <span id="zipcode_help" class="help"></span>
       </div>
       <div class="field">
@@ -49,7 +49,7 @@
           onblur="validateNonEmpty(this, document.getElementById('email_help'))" />
         <span id="email_help" class="help"></span>
       </div>
-      <input type="button" value="Order Banner" />
+      <input type="button" value="Order Banner" onclick="placeOrder(this.form)"/>
     </form>
   </body>
 </html>
