@@ -28,6 +28,31 @@ function validateLength(min, max, inputField, helpText){
     }
 }
 
+function validateDate(inputField, helpText){
+    if(!validateNonEmpty(inputField, helpText)){
+        return false;
+    }
+    
+    return validateRegEx(/^\d{2}\/\d{2}\/(\d{2}|\d{4}))$/, inputField.value, helpText, "Please, enter date like this 09/22/2077 or this 09/22/77");
+}
+
+//Only for USA
+function validatePhone(inputField, helpText){
+    if(!validateNonEmpty(inputField, helpText)){
+        return false;
+    }
+    
+    return validateRegEx(/^\d{3}-\d{3}-\d{4}$/, inputField.value, helpText, "Please, enter phone number like this 800-555-3535");
+}
+
+function validateEmail(inputField, helpText){
+    if(!validateNonEmpty(inputField, helpText)){
+        return false;
+    }
+    
+    return validateRegEx(/^[\w\.-_\+]+@[\w-]+(\.\w{2,4})+$/, inputField.value, helpText, "Please, check your e-mail");
+}
+
 
 //Only for USA ZIP code
 function validateZIPCode(inputField, helpField){
@@ -49,43 +74,33 @@ function validateZIPCode(inputField, helpField){
     }
 }
 
-
-function placeOrder(form){
-    if(validateLength(1, 32, form["message"], form["message_help"]) &&
-      validateZIPCode(form["zipcode"], form["zipcode_help"]) &&
-      validateNonEmpty(form["date"], form["date_help"]) &&
-      validateNonEmpty(form["name"], form["name_help"]) &&
-      validateNonEmpty(form["phone"], form["phone_help"]) &&
-      validateNonEmpty(form["email"], form["email_help"])){
-        form.submit();
+//Regular expressions
+function validateRegEx(regex, inputStr, helpText, helpMessage){
+    if (!regex.test(inputStr)){
+        if(helpText != null){
+            helpText.innerHTML = helpMessage;
+        }
+        return false;
     } else {
-        alert("Sorry, form filled up with mistakes");
+        if (helpText != null){
+            helpText.innerHTML = '';
+        }
+        return true;
     }
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Send form
+function placeOrder(form){
+    if(validateLength(1, 32, form["message"], form["message_help"]) &&
+      validateZIPCode(form["zipcode"], form["zipcode_help"]) &&
+      validateDate(form["date"], form["date_help"]) &&
+      validateNonEmpty(form["name"], form["name_help"]) &&
+      validatePhone(form["phone"], form["phone_help"]) &&
+      validateEmail(form["email"], form["email_help"])){
+        form.submit();
+    } else {
+        alert("Sorry, form filled up with mistakes");
+    }
+}
